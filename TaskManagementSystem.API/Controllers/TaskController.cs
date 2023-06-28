@@ -20,6 +20,10 @@ public class TaskController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Retrieves all the tasks.
+    /// </summary>
+    /// <returns>Collection of tasks.</returns>
     [HttpGet]
     public async Task<IActionResult> GetAllTasks()
     {
@@ -29,6 +33,11 @@ public class TaskController : ControllerBase
         return Ok(mappedTasks);
     }
 
+    /// <summary>
+    /// Gets the task by requested id if one exists.
+    /// </summary>
+    /// <param name="id">Id.</param>
+    /// <returns>Requested task</returns>
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTaskById(Guid id)
     {
@@ -41,6 +50,11 @@ public class TaskController : ControllerBase
         return Ok(response.Task.MapToResponseModel());
     }
 
+    /// <summary>
+    /// Creates new task.
+    /// </summary>
+    /// <param name="requestModel">Create Task request model.</param>
+    /// <returns>Created task.</returns>
     [HttpPost]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequestModel requestModel)
     {
@@ -59,6 +73,12 @@ public class TaskController : ControllerBase
         return Accepted(response.Task.MapToResponseModel());
     }
 
+    /// <summary>
+    /// Updates the task according to request model.
+    /// </summary>
+    /// <param name="id">Task Id.</param>
+    /// <param name="requestModel">Requested model.</param>
+    /// <returns>Updated task entity.</returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateTask([FromRoute] Guid id, [FromBody] UpdateTaskRequestModel requestModel)
     {

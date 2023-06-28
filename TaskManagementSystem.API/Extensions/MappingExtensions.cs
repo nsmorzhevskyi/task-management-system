@@ -12,7 +12,7 @@ public static class MappingExtensions
             Name = task.Name,
             Description = task.Description,
             AssignedTo = task.AssignedTo,
-            Status = task.Status
+            Status = task.Status.ToString()
         };
     }
 }

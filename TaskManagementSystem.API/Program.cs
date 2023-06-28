@@ -20,7 +20,6 @@ builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblyContaining<
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

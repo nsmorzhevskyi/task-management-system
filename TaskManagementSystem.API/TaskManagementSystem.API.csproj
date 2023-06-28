@@ -5,11 +5,17 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>ecebac43-b4eb-464f-9b59-d27cea955bc6</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

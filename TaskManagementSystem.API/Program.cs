@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using TaskManagementSystem.API;
 using TaskManagementSystem.API.Configurations;
 using TaskManagementSystem.Business.Commands;
 using TaskManagementSystem.Business.Events;
@@ -25,7 +26,7 @@ builder.Services.AddMassTransit(busConfigurator =>
 {
     busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-    busConfigurator.AddConsumer<TaskUpdatedEventConsumer>();
+    busConfigurator.AddConsumer<TaskUpdatedEventConsumer>(cfg => cfg.UseMessageRetry(r => r.Interval(3, 500)));
     
     busConfigurator.UsingRabbitMq((context, configurator) =>
     {
@@ -38,6 +39,8 @@ builder.Services.AddMassTransit(busConfigurator =>
         });
     });
 });
+
+builder.Services.AddSingleton<ExceptionHandlerMiddleware>();
 
 builder.Services.AddTransient<IEventBus, EventBus>();
 
@@ -54,6 +57,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
@@ -62,6 +66,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHttpLogging();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

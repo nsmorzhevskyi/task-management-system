@@ -12,9 +12,10 @@ public class UpdateTaskCommand : IRequestHandler<UpdateTaskCommand.Request, Upda
     private readonly ITaskRepository _taskRepository;
     private readonly IEventBus _eventBus;
 
-    public UpdateTaskCommand(ITaskRepository taskRepository)
+    public UpdateTaskCommand(ITaskRepository taskRepository, IEventBus eventBus)
     {
         _taskRepository = taskRepository;
+        _eventBus = eventBus;
     }
 
     public async Task<Response> Handle(Request request, CancellationToken cancellationToken)

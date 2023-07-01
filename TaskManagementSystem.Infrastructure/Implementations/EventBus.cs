@@ -9,7 +9,7 @@ public sealed class EventBus : IEventBus
 
     public EventBus(IPublishEndpoint publishEndpoint)
     {
-        _publishEndpoint = publishEndpoint;
+        _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
     }
 
     public async Task PublishAsync<T>(T message, CancellationToken cancellationToken = default)

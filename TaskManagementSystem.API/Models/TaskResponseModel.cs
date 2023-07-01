@@ -1,6 +1,4 @@
-﻿using TaskStatus = TaskManagementSystem.Domain.Entities.TaskStatus;
-
-namespace TaskManagementSystem.API.Models;
+﻿namespace TaskManagementSystem.API.Models;
 
 public class TaskResponseModel
 {

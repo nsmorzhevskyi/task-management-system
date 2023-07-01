@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using TaskManagementSystem.Business.Events;
 using TaskManagementSystem.Data.Repositories;
 using TaskManagementSystem.Domain.Entities;
+using TaskManagementSystem.Infrastructure.Interfaces;
 using TaskStatus = TaskManagementSystem.Domain.Entities.TaskStatus;
 
 namespace TaskManagementSystem.Business.Commands;
@@ -8,6 +10,7 @@ namespace TaskManagementSystem.Business.Commands;
 public class UpdateTaskCommand : IRequestHandler<UpdateTaskCommand.Request, UpdateTaskCommand.Response>
 {
     private readonly ITaskRepository _taskRepository;
+    private readonly IEventBus _eventBus;
 
     public UpdateTaskCommand(ITaskRepository taskRepository)
     {
@@ -20,6 +23,12 @@ public class UpdateTaskCommand : IRequestHandler<UpdateTaskCommand.Request, Upda
         task.SetStatus(request.Status);
         
         await _taskRepository.UpdateTaskAsync(task);
+
+        await _eventBus.PublishAsync(new TaskUpdatedEvent<TaskActivity>
+        {
+            Data = task,
+            Name = "TaskManagementSystem.TaskUpdatedEvent"
+        }, cancellationToken);
         
         return new Response(task);
     }

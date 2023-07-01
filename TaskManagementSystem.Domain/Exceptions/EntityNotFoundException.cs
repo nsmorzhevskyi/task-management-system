@@ -1,6 +1,6 @@
 namespace TaskManagementSystem.Domain.Exceptions;
 
-public class EntityNotFoundException : Exception
+public class EntityNotFoundException : DomainException
 {
     private const string ExceptionMessage = "Requested entity was not found.";
     public EntityNotFoundException()
